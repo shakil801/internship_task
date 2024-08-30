@@ -18,6 +18,19 @@ class CategoryController extends Controller
         ], 200);
     }
 
+    public function store(Request $request){
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        //create a new category
+        $category = new Category();
+        $category->name = $validatedData['name'];
+        $category->save();
+        return redirect()->back()->with('success', 'Category added successfully!');
+    }
+
     public function destroy($id)
     {
         // Find the category by ID
